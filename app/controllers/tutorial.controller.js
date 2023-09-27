@@ -14,51 +14,36 @@ const pool = new Pool({
 
 
 // Create and Save a new Tutorial
-// exports.create = (req, res) => {
-//   // Validate request
-//   if (!req.body.title) {
-//     res.status(400).send({
-//       message: "Content can not be empty!"
-//     });
-//     return;
-//   }
-
-//   // Create a Tutorial
-//   const tutorial = {
-//     title: req.body.title,
-//     description: req.body.description,
-//     published: req.body.published ? req.body.published : false
-//   };
-
-//   // Save Tutorial in the database
-//   Tutorial.create(tutorial)
-//     .then(data => {
-//       res.send(data);
-//     })
-//     .catch(err => {
-//       res.status(500).send({
-//         message:
-//           err.message || "Some error occurred while creating the Tutorial."
-//       });
-//     });
-// };
-
 exports.create = (req, res) => {
-  const { nom } = req.body;
+  // Validate request
+  if (!req.body.user) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  }
 
-  const sql = 'INSERT INTO hola (nom) VALUES ($1)';
-  const values = [nom];
+  // Create a Tutorial
+  const tutorial = {
+    user: req.body.title,
+    tipo_user: req.body.description,
+    password: req.body.published ? req.body.published : false
+  };
 
-  pool.query(sql, values, (err, result) => {
-    if (err) {
-      console.error('Error al crear el tutorial: ' + err.message);
-      res.status(500).json({ message: 'Error al crear el tutorial' });
-      return;
-    }
-    console.log('Tutorial creado con éxito');
-    res.status(201).json({ message: 'Tutorial creado con éxito' });
-  });
+  // Save Tutorial in the database
+  Tutorial.create(tutorial)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+        
+          err.message || "Some error occurred while creating the Tutorial."
+      });
+    });
 };
+
 
 exports.findAll = (req, res) => {
   const title = req.query.title;
@@ -180,4 +165,3 @@ exports.findAllPublished = (req, res) => {
 // module.exports = {
 //   getTutorials
 // };
-
