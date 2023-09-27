@@ -18,8 +18,8 @@ module.exports = app => {
     // Delete a Tutorial with id
     router.delete("/:id", lista_canciones.delete);
   
-    // // Search por titulo Tutorials
-    //router.get("/search/", lista_canciones.searchByTitle);
+    // // Search por titulo Tutorials para el POSTMAN localhost:4000/api/lista_canciones/?searchTerm="list"
+    router.get("/:searchTerm", lista_canciones.searchByTitle);
   
     app.use("/api/lista_canciones", router);
   };
