@@ -1,5 +1,5 @@
 const { Pool } = require('pg');
-
+//configuracion para la bd
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
@@ -7,7 +7,7 @@ const pool = new Pool({
     database: 'db_spotify_is',
     port: '5432'
 });
-
+//metodo para crear una lista de canciones
 exports.create = (req, res) => {
     const { titulo_lista, tipo_lista, estado, pathimage } = req.body;
   
@@ -127,5 +127,10 @@ exports.searchByTitle = (req, res) => {
   
       res.status(200).json(result.rows);
     });
+
+  
   };
+
+
+  
 

@@ -3,19 +3,19 @@ module.exports = app => {
   
     var router = require("express").Router();
   
-    // Create a new Tutorial
+    // ruteo para crear lista de canciones
     router.post("/", lista_canciones.create);
   
-    // Retrieve all Tutorials
+    // obtener todas las listas de canciones
     router.get("/", lista_canciones.findAll);
   
-    // Retrieve a single Tutorial with id
+    // obtener una sola lista de canciones con su id
     router.get("/:id", lista_canciones.findOne);
   
-    // Update a Tutorial with id
+    // actualizar una lista de canciones
     router.put("/:id", lista_canciones.update);
   
-    // Delete a Tutorial with id
+    // eliminar una lista de canciones
     router.delete("/:id", lista_canciones.delete);
   
     // // Search por titulo Tutorials
