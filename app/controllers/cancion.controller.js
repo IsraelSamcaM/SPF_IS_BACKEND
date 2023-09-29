@@ -26,9 +26,9 @@ exports.create = (req, res) => {
     });
 };
 
-// Obtener todas las Canciones
+// Obtener todas las Canciones mas sus portada
 exports.findAll = (req, res) => {
-    const sql = 'SELECT * FROM canciones';
+    const sql = 'SELECT c.id_cancion,c.nombre_cancion,c.colaboradores,c.path_cancion,lc.pathimage FROM canciones c JOIN lista_canciones lc ON c.id_lista=lc.id_lista';
   
     pool.query(sql, (err, result) => {
       if (err) {
