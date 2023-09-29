@@ -21,7 +21,7 @@ exports.create = (req, res) => {
         res.status(500).json({ message: 'Error al crear Lista de Canciones' });
         return;
       }
-      console.log('Lista de Canciones creado con éxito');
+      console.log('Cancion creado con éxito');
       res.status(201).json({ message: 'Lista de Canciones creado con éxito' });
     });
 };

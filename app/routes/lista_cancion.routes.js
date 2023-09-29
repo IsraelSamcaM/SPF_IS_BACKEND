@@ -8,6 +8,8 @@ module.exports = app => {
   
     // Retrieve all Tutorials
     router.get("/", lista_canciones.findAll);
+
+    router.get("/getcompleto", lista_canciones.findAllMusic);
   
     // Retrieve a single Tutorial with id
     router.get("/:id", lista_canciones.findOne);

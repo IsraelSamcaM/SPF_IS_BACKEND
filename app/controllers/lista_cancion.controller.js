@@ -27,7 +27,7 @@ exports.create = (req, res) => {
 
 // Obtener todas las Listas de Canciones
 exports.findAll = (req, res) => {
-    const sql = 'SELECT * FROM lista_canciones';
+    const sql = 'SELECT * FROM lista_canciones ';
   
     pool.query(sql, (err, result) => {
       if (err) {
@@ -38,6 +38,38 @@ exports.findAll = (req, res) => {
       res.status(200).json(result.rows);
     });
 };
+
+// SUJETO A SER PROBADO
+// Obtener todas las Listas de Canciones con sus Canciones asociadas
+exports.findAllMusic = (req, res) => {
+  const sql = `
+    SELECT
+      lc.id_lista,
+      lc.titulo_lista,
+      lc.tipo_lista,
+      lc.pathimage,
+      lc.estado,
+      COALESCE(json_agg(c.*) FILTER (WHERE c.id_cancion IS NOT NULL), '[]') AS canciones
+    FROM
+      lista_canciones lc
+    LEFT JOIN
+      canciones c ON lc.id_lista = c.id_lista
+    GROUP BY
+      lc.id_lista
+  `;
+
+  pool.query(sql, (err, result) => {
+    if (err) {
+      console.error('Error al obtener las Listas de Canciones: ' + err.message);
+      res.status(500).json({ message: 'Error al obtener las Listas de Canciones' });
+      return;
+    }
+    
+    // El resultado ya está en el formato deseado, no es necesario procesarlo más.
+    res.status(200).json(result.rows);
+  });
+};
+
 
 // Obtener una sola Lista de Canciones por su ID
 exports.findOne = (req, res) => {
