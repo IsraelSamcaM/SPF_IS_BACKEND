@@ -1,5 +1,6 @@
 const { Pool } = require('pg');
 
+//configuracion para acceder a la base de datos
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
@@ -8,6 +9,9 @@ const pool = new Pool({
     port: '5432'
 });
 
+//metodo para crear una lista de canciones en la bd
+//se pide en la cabecera: el titulo que llevara la lista, el tipo ya sea album o single,
+//el estado, si es que esta oculto o publico, y el path de la imagen que se asiganara a la lista
 exports.create = (req, res) => {
     const { titulo_lista, tipo_lista, estado, pathimage } = req.body;
   
@@ -25,7 +29,7 @@ exports.create = (req, res) => {
     });
 };
 
-// Obtener todas las Listas de Canciones
+// metodo para obtener todas las Listas de Canciones de la bd y sus atributos
 exports.findAll = (req, res) => {
     const sql = 'SELECT * FROM lista_canciones ';
   
@@ -93,7 +97,7 @@ exports.findOne = (req, res) => {
     });
 };
 
-// Actualizar una Lista de Canciones por su ID
+// Actualizar los parametros de una Lista de Canciones por su ID
 exports.update = (req, res) => {
     const id = req.params.id;
     const { titulo_lista, tipo_lista, estado, pathimage } = req.body;
