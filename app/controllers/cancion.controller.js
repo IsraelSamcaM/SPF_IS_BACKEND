@@ -1,5 +1,6 @@
 const { Pool } = require('pg');
 
+//configuracion para acceder a la base de datos
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
@@ -8,7 +9,9 @@ const pool = new Pool({
     port: '5432'
 });
 
-
+//metodo para añadir una nueva cancion en la bd en una lista
+//se pide en la cabecera: el id de la lista a la que pertenece la cancion, el nombre de la cancion,
+//los colaboradores o artistas que contribuyeron al desarrollo de la cancion, y el path del link de la cancion que permitira reproducirla
 exports.create = (req, res) => {
     const { id_lista, nombre_cancion, colaboradores, path_cancion } = req.body;
   
@@ -26,7 +29,7 @@ exports.create = (req, res) => {
     });
 };
 
-// Obtener todas las Canciones mas sus portada
+// Obtener todas las Canciones que hay en la bd, asociadas a la imagen de la lista de canciones a la que pertenecen
 exports.findAll = (req, res) => {
     const sql = 'SELECT c.id_cancion,c.nombre_cancion,c.colaboradores,c.path_cancion,lc.pathimage FROM canciones c JOIN lista_canciones lc ON c.id_lista=lc.id_lista';
   
@@ -40,7 +43,7 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Obtener una sola Lista de Canciones por su ID
+// Obtener una sola cancion por su ID
 exports.findOne = (req, res) => {
     const id = req.params.id;
   
@@ -62,7 +65,7 @@ exports.findOne = (req, res) => {
     });
 };
 
-// Actualizar una Canciones por su ID
+// Actualizar una Cancion por su ID
 exports.update = (req, res) => {
     const id = req.params.id;
     const { id_lista, nombre_cancion, colaboradores, path_cancion } = req.body;
@@ -85,7 +88,7 @@ exports.update = (req, res) => {
     });
 };
 
-// Eliminar una Lista de Canciones por su ID
+// Eliminar una cancion por su ID
 exports.delete = (req, res) => {
     const id = req.params.id;
   
@@ -107,7 +110,7 @@ exports.delete = (req, res) => {
     });
 };
   
-  // Buscar Listas de Canciones por título_lista (LIKE)
+  // Buscar cancion por nombre de cancion (LIKE)
 exports.searchByName = (req, res) => {
     const searchTerm = req.query.searchTerm;
   
