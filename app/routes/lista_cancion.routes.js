@@ -23,7 +23,7 @@ module.exports = app => {
     router.delete("/:id", lista_canciones.delete);
   
     // router para obtener una lista de canciones por su nombre
-    router.get("/:searchTerm", lista_canciones.searchByTitle);
+    router.get("/search/:searchTerm", lista_canciones.searchByTitle);
   
     app.use("/api/lista_canciones", router);
   };
