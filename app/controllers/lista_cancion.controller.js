@@ -29,6 +29,44 @@ exports.create = (req, res) => {
     });
 };
 
+exports.createlist= (req, res) => {
+  const { nombre_usuario, titulo_lista, path_image, colaborador } = req.body;
+
+  const sqlBuscarUsuario = 'SELECT ID_USUARIO FROM USUARIOS WHERE NOMBRE_USUARIO = $1';
+  const valuesBuscarUsuario = [nombre_usuario];
+
+  pool.query(sqlBuscarUsuario, valuesBuscarUsuario, (err, resultUsuario) => {
+      if (err) {
+          console.error('Error al buscar usuario: ' + err.message);
+          res.status(500).json({ message: 'Error al buscar usuario' });
+          return;
+      }
+
+      if (resultUsuario.rows.length === 0) {
+          console.error('Usuario no encontrado');
+          res.status(404).json({ message: 'Usuario no encontrado' });
+          return;
+      }
+
+      const id_usuario = resultUsuario.rows[0].ID_USUARIO;
+
+      const sqlInsertarLista = 'INSERT INTO LISTA_CANCIONES (ID_USUARIO, TITULO_LISTA, PATH_IMAGE, COLABORADOR) VALUES ($1, $2, $3, $4)';
+      const valuesInsertarLista = [id_usuario, titulo_lista, path_image, colaborador];
+
+      pool.query(sqlInsertarLista, valuesInsertarLista, (err, resultInsertarLista) => {
+          if (err) {
+              console.error('Error al crear Lista de Canciones: ' + err.message);
+              res.status(500).json({ message: 'Error al crear Lista de Canciones' });
+              return;
+          }
+
+          console.log('Lista de Canciones creado con éxito');
+          res.status(201).json({ message: 'Lista de Canciones creado con éxito' });
+      });
+  });
+};
+
+
 // metodo para obtener todas las Listas de Canciones de la bd y sus atributos
 exports.findAll = (req, res) => {
     const sql = 'SELECT * FROM lista_canciones ';

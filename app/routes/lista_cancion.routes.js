@@ -5,6 +5,8 @@ module.exports = app => {
   
     // router para crear una lista de canciones
     router.post("/", lista_canciones.create);
+    
+    router.post("/createlist/", lista_canciones.createlist);
   
     // router para encontrar todas las listas de canciones
     router.get("/", lista_canciones.findAll);
