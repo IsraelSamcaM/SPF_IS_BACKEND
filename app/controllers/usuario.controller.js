@@ -130,3 +130,27 @@ exports.searchByName = (req, res) => {
         res.status(200).json(result.rows);
     });
 };
+
+// Buscar usuario por nombre de usuario 
+exports.searchByNameNoLike= (req, res) => {
+    const searchTerm = req.query.searchTerm;
+
+    if (!searchTerm) {
+        res.status(400).json({ message: "El parámetro 'searchTerm' es requerido." });
+        return;
+    }
+    console.log("Valor de searchTerm:", searchTerm);
+
+    const sql = 'SELECT * FROM usuarios WHERE nombre_usuario  = $1';
+    const values = [searchTerm];
+
+    pool.query(sql, values, (err, result) => {
+        if (err) {
+            console.error('Error al realizar la búsqueda por nombre_usuario: ' + err.message);
+            res.status(500).json({ message: 'Error al realizar la búsqueda' });
+            return;
+        }
+
+        res.status(200).json(result.rows);
+    });
+};
