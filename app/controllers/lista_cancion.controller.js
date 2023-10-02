@@ -61,8 +61,18 @@ exports.createlist= (req, res) => {
 
 // metodo para obtener todas las Listas de Canciones de la bd y sus atributos
 exports.findAll = (req, res) => {
-    const sql = 'SELECT * FROM lista_canciones ';
-  
+      //'SELECT * FROM lista_canciones lc JOIN usuarios u';
+    const sql =`
+    SELECT 
+      lc.id_lista,
+      lc.titulo_lista,
+      lc.path_image,
+      lc.colaborador,
+      u.nombre_usuario,
+      u.tipo_usuario
+    FROM lista_canciones lc
+    JOIN usuarios u ON lc.id_usuario = u.id_usuario 
+    `;
     pool.query(sql, (err, result) => {
       if (err) {
         console.error('Error al obtener las Listas de Canciones: ' + err.message);
