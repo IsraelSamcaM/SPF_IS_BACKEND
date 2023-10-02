@@ -1,13 +1,5 @@
-const { Pool } = require('pg');
+const pool = require('../config/config');
 
-//configuracion para acceder a la base de datos
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    password: '13033162',
-    database: 'db_spotify_is',
-    port: '5432'
-});
 
 //metodo para crear una lista de canciones en la bd
 //se pide en la cabecera: el titulo que llevara la lista, el tipo ya sea album o single,

@@ -1,16 +1,7 @@
 const db = require("../models");
 const Tutorial = db.tutorials;
 const Op = db.Sequelize.Op;
-
-const { Pool } = require('pg');
-
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    password: '13033162',
-    database: 'testdb',
-    port: '5432'
-});
+const pool = require('../config/config');
 
 
 // Create and Save a new Tutorial
