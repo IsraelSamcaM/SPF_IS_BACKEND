@@ -52,6 +52,7 @@ exports.findAllMusic = (req, res) => {
       lc.titulo_lista,
       lc.path_image,
       lc.colaborador,
+      lc.cantidad_canciones,
       COALESCE(json_agg(c.*) FILTER (WHERE c.id_cancion IS NOT NULL), '[]') AS canciones,
       COALESCE(json_agg(u.*) FILTER (WHERE u.id_usuario IS NOT NULL), '[]') AS artista
           FROM
