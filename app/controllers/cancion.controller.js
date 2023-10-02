@@ -13,10 +13,10 @@ const pool = new Pool({
 //se pide en la cabecera: el id de la lista a la que pertenece la cancion, el nombre de la cancion,
 //los colaboradores o artistas que contribuyeron al desarrollo de la cancion, y el path del link de la cancion que permitira reproducirla
 exports.create = (req, res) => {
-    const { id_lista, nombre_cancion, path_cancion } = req.body;
+    const { id_lista, nombre_cancion, path_cancion, duracion } = req.body;
   
-    const sql = 'INSERT INTO canciones (id_lista , nombre_cancion  ,path_cancion) VALUES ($1,$2,$3)';
-    const values = [id_lista, nombre_cancion, path_cancion];
+    const sql = 'INSERT INTO canciones (id_lista , nombre_cancion  ,path_cancion, duracion) VALUES ($1,$2,$3,$4)';
+    const values = [id_lista, nombre_cancion, path_cancion, duracion];
   
     pool.query(sql, values, (err, result) => {
       if (err) {
@@ -31,7 +31,7 @@ exports.create = (req, res) => {
 
 // Obtener todas las Canciones que hay en la bd, asociadas a la imagen de la lista de canciones a la que pertenecen
 exports.findAll = (req, res) => {
-    const sql = 'SELECT c.id_cancion,c.nombre_cancion,c.path_cancion,lc.path_image FROM canciones c JOIN lista_canciones lc ON c.id_lista=lc.id_lista';
+    const sql = 'SELECT c.id_cancion,c.nombre_cancion,c.path_cancion,c.duracion, lc.path_image FROM canciones c JOIN lista_canciones lc ON c.id_lista=lc.id_lista';
   
     pool.query(sql, (err, result) => {
       if (err) {
@@ -68,10 +68,10 @@ exports.findOne = (req, res) => {
 // Actualizar una Cancion por su ID
 exports.update = (req, res) => {
     const id = req.params.id;
-    const { id_lista, nombre_cancion, path_cancion } = req.body;
+    const { id_lista, nombre_cancion, path_cancion, duracion } = req.body;
   
-    const sql = 'UPDATE canciones SET id_lista = $1, nombre_cancion = $2, path_cancion = $3 WHERE id_cancion = $4';
-    const values = [id_lista, nombre_cancion, path_cancion, id];
+    const sql = 'UPDATE canciones SET id_lista = $1, nombre_cancion = $2, path_cancion = $3 ,duracion = $4 WHERE id_cancion = $5';
+    const values = [id_lista, nombre_cancion, path_cancion, duracion,id];
   
     pool.query(sql, values, (err, result) => {
       if (err) {

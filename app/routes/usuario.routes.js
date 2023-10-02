@@ -18,7 +18,7 @@ module.exports = app => {
     // router para eliminar una sola cancion por su ID
     router.delete("/:id", usuarios.delete);
     
-    //localhost:4000/api/usuarios/search/ ?searchTerm=go
+    //localhost:4000/api/usuarios/search/?searchTerm=go
     // // router para buscar una sola cancion por su nombre de cancion
     router.get("/search/:searchTerm", usuarios.searchByName);
   
