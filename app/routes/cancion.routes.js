@@ -12,6 +12,9 @@ module.exports = app => {
       // router para Obtener una sola cancion por su ID
     router.get("/:id", canciones.findOne);
   
+    // router para Obtener todas las canciones por id_lista
+    router.get("/completo_lista/:id", canciones.findAllByIdList);
+
     // router para actualizar una sola cancion por su ID
     router.put("/:id", canciones.update);
   
