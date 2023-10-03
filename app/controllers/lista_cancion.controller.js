@@ -68,6 +68,7 @@ exports.findAll = (req, res) => {
       lc.titulo_lista,
       lc.path_image,
       lc.colaborador,
+      lc.id_usuario,
       u.nombre_usuario,
       u.tipo_usuario
     FROM lista_canciones lc
