@@ -65,10 +65,10 @@ exports.findAll = (req, res) => {
     const sql =`
     SELECT 
       lc.id_lista,
+      u.id_usuario,
       lc.titulo_lista,
       lc.path_image,
       lc.colaborador,
-      lc.id_usuario,
       u.nombre_usuario,
       u.tipo_usuario
     FROM lista_canciones lc
@@ -156,8 +156,20 @@ exports.findAllMusic = (req, res) => {
 // Obtener una sola Lista de Canciones por su ID
 exports.findOne = (req, res) => {
     const id = req.params.id;
-  
-    const sql = 'SELECT * FROM lista_canciones WHERE id_lista = $1';
+  // 'SELECT * FROM lista_canciones WHERE id_lista = $1';
+    const sql =`
+      SELECT 
+      lc.id_lista,
+      u.id_usuario,
+      lc.titulo_lista,
+      lc.path_image,
+      lc.colaborador,
+      lc.cantidad_canciones,
+      u.nombre_usuario
+      FROM lista_canciones lc
+      JOIN usuarios u ON lc.id_usuario=u.id_usuario
+      WHERE id_lista = $1
+    `;
     const values = [id];
   
     pool.query(sql, values, (err, result) => {
