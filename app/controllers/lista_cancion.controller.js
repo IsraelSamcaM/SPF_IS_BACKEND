@@ -40,7 +40,7 @@ exports.createlist= (req, res) => {
           return;
       }
 
-      const id_usuario = resultUsuario.rows[0].ID_USUARIO;
+      const id_usuario = resultUsuario.rows[0].id_usuario;
 
       const sqlInsertarLista = 'INSERT INTO LISTA_CANCIONES (ID_USUARIO, TITULO_LISTA, PATH_IMAGE, COLABORADOR) VALUES ($1, $2, $3, $4)';
       const valuesInsertarLista = [id_usuario, titulo_lista, path_image, colaborador];
