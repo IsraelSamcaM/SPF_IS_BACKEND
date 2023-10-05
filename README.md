@@ -7,7 +7,7 @@ We will build Rest Apis that can create, retrieve, update, delete and find Tutor
 
 The following table shows overview of the Rest APIs that will be exported:
 
-- GET     `api/tutorials`	            get all Tutorials
+- GET     `api/tutorials`	            get all Tutorialesss
 - GET     `api/tutorials/:id`         get Tutorial by id
 - POST    `api/tutorials`             add new Tutorial
 - PUT     `api/tutorials/:id`         update Tutorial by id
