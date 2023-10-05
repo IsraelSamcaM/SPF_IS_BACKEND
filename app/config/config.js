@@ -5,7 +5,7 @@ const pool = new Pool({
     host: 'containers-us-west-109.railway.app',
     password: '3NrdUh8AYorUGcWEZRea',
     database: 'railway',
-    port: '6474'
+    port: '6479'
 });
 
 module.exports = pool;
