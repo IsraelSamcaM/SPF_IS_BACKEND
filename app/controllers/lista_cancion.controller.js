@@ -7,7 +7,7 @@ const pool = require('../config/config');
 exports.create = (req, res) => {
     const {  id_usuario, titulo_lista, path_image, colaborador } = req.body;
   
-    const sql = 'INSERT INTO lista_canciones ( id_usuario, titulo_lista, path_image, colaborador, cantidad_canciones) VALUES ($1,$2,$3,$4)';
+    const sql = 'INSERT INTO lista_canciones ( id_usuario, titulo_lista, path_image, colaborador, cantidad_canciones) VALUES ($1,$2,$3,$4, 0)';
     const values = [ id_usuario, titulo_lista, path_image, colaborador];
   
     pool.query(sql, values, (err, result) => {
@@ -42,7 +42,7 @@ exports.createlist= (req, res) => {
 
       const id_usuario = resultUsuario.rows[0].id_usuario;
 
-      const sqlInsertarLista = 'INSERT INTO LISTA_CANCIONES (ID_USUARIO, TITULO_LISTA, PATH_IMAGE, COLABORADOR) VALUES ($1, $2, $3, $4, 0)';
+      const sqlInsertarLista = 'INSERT INTO LISTA_CANCIONES (ID_USUARIO, TITULO_LISTA, PATH_IMAGE, COLABORADOR,cantidad_canciones) VALUES ($1, $2, $3, $4, 0)';
       const valuesInsertarLista = [id_usuario, titulo_lista, path_image, colaborador];
 
       pool.query(sqlInsertarLista, valuesInsertarLista, (err, resultInsertarLista) => {
