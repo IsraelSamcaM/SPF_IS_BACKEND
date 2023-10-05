@@ -98,7 +98,7 @@ SELECT
   lc.cantidad_canciones
 FROM lista_canciones lc
 JOIN usuarios u ON lc.id_usuario = u.id_usuario 
-WHERE catidad_canciones != 0
+WHERE cantidad_canciones != 0
 `;
 pool.query(sql, (err, result) => {
   if (err) {
