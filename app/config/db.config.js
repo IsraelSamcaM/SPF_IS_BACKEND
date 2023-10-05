@@ -1,9 +1,10 @@
 module.exports = {
-  HOST: "localhost",
+  HOST: "containers-us-west-109.railway.app",
   USER: "postgres",
-  PASSWORD: "13033162",
-  DB: "db_spotify_is",
+  PASSWORD: "3NrdUh8AYorUGcWEZRea",
+  DB: "railway",
   dialect: "postgres",
+  port: "6479",
   pool: {
     max: 5,
     min: 0,
