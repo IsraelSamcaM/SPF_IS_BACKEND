@@ -7,7 +7,7 @@ const pool = require('../config/config');
 exports.create = (req, res) => {
     const {  id_usuario, titulo_lista, path_image, colaborador } = req.body;
   
-    const sql = 'INSERT INTO lista_canciones ( id_usuario, titulo_lista, path_image, colaborador) VALUES ($1,$2,$3,$4)';
+    const sql = 'INSERT INTO lista_canciones ( id_usuario, titulo_lista, path_image, colaborador, cantidad_canciones) VALUES ($1,$2,$3,$4, 0)';
     const values = [ id_usuario, titulo_lista, path_image, colaborador];
   
     pool.query(sql, values, (err, result) => {
@@ -42,7 +42,7 @@ exports.createlist= (req, res) => {
 
       const id_usuario = resultUsuario.rows[0].id_usuario;
 
-      const sqlInsertarLista = 'INSERT INTO LISTA_CANCIONES (ID_USUARIO, TITULO_LISTA, PATH_IMAGE, COLABORADOR) VALUES ($1, $2, $3, $4)';
+      const sqlInsertarLista = 'INSERT INTO LISTA_CANCIONES (ID_USUARIO, TITULO_LISTA, PATH_IMAGE, COLABORADOR,cantidad_canciones) VALUES ($1, $2, $3, $4, 0)';
       const valuesInsertarLista = [id_usuario, titulo_lista, path_image, colaborador];
 
       pool.query(sqlInsertarLista, valuesInsertarLista, (err, resultInsertarLista) => {
@@ -70,7 +70,8 @@ exports.findAll = (req, res) => {
       lc.path_image,
       lc.colaborador,
       u.nombre_usuario,
-      u.tipo_usuario
+      u.tipo_usuario,
+      lc.cantidad_canciones
     FROM lista_canciones lc
     JOIN usuarios u ON lc.id_usuario = u.id_usuario 
     `;
@@ -82,6 +83,31 @@ exports.findAll = (req, res) => {
       }
       res.status(200).json(result.rows);
     });
+};
+
+exports.findAllListasConCanciones = (req, res) => {
+const sql =`
+SELECT 
+  lc.id_lista,
+  u.id_usuario,
+  lc.titulo_lista,
+  lc.path_image,
+  lc.colaborador,
+  u.nombre_usuario,
+  u.tipo_usuario,
+  lc.cantidad_canciones
+FROM lista_canciones lc
+JOIN usuarios u ON lc.id_usuario = u.id_usuario 
+WHERE cantidad_canciones != 0
+`;
+pool.query(sql, (err, result) => {
+  if (err) {
+    console.error('Error al obtener las Listas de Canciones: ' + err.message);
+    res.status(500).json({ message: 'Error al obtener las Listas de Canciones' });
+    return;
+  }
+  res.status(200).json(result.rows);
+});
 };
 
 // Obtener todas la lista de Canciones si le das su id con sus Canciones asociadas y su artista

@@ -79,23 +79,23 @@ exports.update = (req, res) => {
 
 // Eliminar un usuario por su ID
 exports.delete = (req, res) => {
-    const id = req.params.id;
+        const id = req.params.id;
 
-    const sql = 'DELETE FROM usuarios WHERE id_usuario = $1';
-    const values = [id];
+        const sql = 'DELETE FROM usuarios WHERE id_usuario = $1';
+        const values = [id];
 
-    pool.query(sql, values, (err, result) => {
-        if (err) {
-            console.error('Error al eliminar el usuario: ' + err.message);
-            res.status(500).json({ message: 'Error al eliminar el usuario' });
-            return;
-        }
+        pool.query(sql, values, (err, result) => {
+            if (err) {
+                console.error('Error al eliminar el usuario: ' + err.message);
+                res.status(500).json({ message: 'Error al eliminar el usuario' });
+                return;
+            }
 
-        if (result.rowCount === 1) {
-            res.status(200).json({ message: 'Usuario eliminado con éxito' });
-        } else {
-            res.status(404).json({ message: `No se puede eliminar el usuario con el ID ${id}. ¡Quizás no se encontró el usuario!` });
-        }
+            if (result.rowCount === 1) {
+                res.status(200).json({ message: 'Usuario eliminado con éxito' });
+            } else {
+                res.status(404).json({ message: `No se puede eliminar el usuario con el ID ${id}. ¡Quizás no se encontró el usuario!` });
+            }
     });
 };
 
@@ -143,6 +143,67 @@ exports.searchByNameNoLike= (req, res) => {
             return;
         }
 
+        res.status(200).json(result.rows);
+    });
+};
+
+// Dado un id_user devolver todas las canciones que tiene ese user
+
+exports.findCancionesByUser = (req, res) => {
+    const id = req.params.id;
+    const sql = `
+    SELECT 
+        c.id_cancion,
+        c.nombre_cancion, 
+        c.genero, 
+        c.duracion,
+        c.path_cancion,
+        lc.id_lista,
+        lc.titulo_lista,
+        lc.path_image,
+        u.id_usuario,
+        u.nombre_usuario
+    FROM public.usuarios u
+        JOIN public.lista_canciones lc ON u.id_usuario = lc.id_usuario
+        JOIN public.canciones c ON lc.id_lista = c.id_lista
+    WHERE u.id_usuario = $1;
+    `;
+    const values = [id];
+
+    pool.query(sql, values, (err, result) => {
+        if (err) {
+            console.error('Error al obtener las canciones del usuario: ' + err.message);
+            res.status(500).json({ message: 'Error al obtener las canciones del usuario ' });
+            return;
+        }
+        res.status(200).json(result.rows);
+    });
+};
+
+// Dado un id_user devolver todas su listas.
+exports.findListasByUser = (req, res) => {
+    const id = req.params.id;
+
+    const sql =`
+    SELECT 
+        u.id_usuario,
+        u.nombre_usuario,
+        lc.id_lista,
+        lc.titulo_lista,
+        lc.path_image,
+        lc.cantidad_canciones
+    FROM public.usuarios u
+    JOIN public.lista_canciones lc ON u.id_usuario = lc.id_usuario
+    WHERE u.id_usuario = $1;
+    `;
+    const values = [id];
+
+    pool.query(sql, values, (err, result) => {
+        if (err) {
+            console.error('Error al obtener las listas del usuario: ' + err.message);
+            res.status(500).json({ message: 'Error al obtener el usuario' });
+            return;
+        }
         res.status(200).json(result.rows);
     });
 };

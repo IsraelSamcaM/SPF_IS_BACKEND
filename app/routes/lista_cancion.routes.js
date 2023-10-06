@@ -14,6 +14,10 @@ module.exports = app => {
     // router para encontrar todas las listas con sus canciones asociadas 
 
     router.get("/getcompleto/:id", lista_canciones.findAllMusicId);
+
+    // router para encontrar todas las listas con sus canciones asociadas 
+
+    router.get("/getnuevo/", lista_canciones.findAllListasConCanciones);
   
     // router para encontrar todas las listas con sus canciones asociadas 
     router.get("/getcompleto/", lista_canciones.findAllMusic);
