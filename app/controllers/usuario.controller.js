@@ -172,8 +172,8 @@ exports.findCancionesByUser = (req, res) => {
 
     pool.query(sql, values, (err, result) => {
         if (err) {
-            console.error('Error al obtener los usuarios: ' + err.message);
-            res.status(500).json({ message: 'Error al obtener los usuarios' });
+            console.error('Error al obtener las canciones del usuario: ' + err.message);
+            res.status(500).json({ message: 'Error al obtener las canciones del usuario ' });
             return;
         }
         res.status(200).json(result.rows);
@@ -200,8 +200,8 @@ exports.findListasByUser = (req, res) => {
 
     pool.query(sql, values, (err, result) => {
         if (err) {
-            console.error('Error al obtener los usuarios: ' + err.message);
-            res.status(500).json({ message: 'Error al obtener los usuarios' });
+            console.error('Error al obtener las listas del usuario: ' + err.message);
+            res.status(500).json({ message: 'Error al obtener el usuario' });
             return;
         }
         res.status(200).json(result.rows);
