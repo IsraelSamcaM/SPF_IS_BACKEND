@@ -200,15 +200,10 @@ exports.findListasByUser = (req, res) => {
 
     pool.query(sql, values, (err, result) => {
         if (err) {
-            console.error('Error al eliminar el usuario: ' + err.message);
-            res.status(500).json({ message: 'Error al eliminar el usuario' });
+            console.error('Error al obtener los usuarios: ' + err.message);
+            res.status(500).json({ message: 'Error al obtener los usuarios' });
             return;
         }
-
-        if (result.rowCount === 1) {
-            res.status(200).json({ message: 'Usuario eliminado con éxito' });
-        } else {
-            res.status(404).json({ message: `No se puede eliminar el usuario con el ID ${id}. ¡Quizás no se encontró el usuario!` });
-        }
+        res.status(200).json(result.rows);
     });
 };

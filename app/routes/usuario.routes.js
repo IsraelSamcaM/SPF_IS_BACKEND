@@ -12,7 +12,6 @@ module.exports = app => {
     // router para encontrar todas las canciones de acuerdo al id_usuario
     router.get("/getcancionesbyid_user/:id", usuarios.findCancionesByUser)
 
-    
     // router para encontrar todas las listas de acuerdo al id_usuario
     router.get("/getlistasbyid_user/:id", usuarios.findListasByUser)
   
