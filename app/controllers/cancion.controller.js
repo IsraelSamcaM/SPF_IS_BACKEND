@@ -46,9 +46,12 @@ exports.findAllByIdList = (req, res) => {
       c.duracion,
       c.genero,
       lc.path_image,
-      c.nombre_archivo
+      c.nombre_archivo,
+      u.id_usuario,
+      u.nombre_usuario
     FROM canciones c 
     JOIN lista_canciones lc ON c.id_lista=lc.id_lista
+    JOIN usuarios u ON u.id_usuario=lc.id_usuario
     WHERE c.id_lista = $1;
 `;
 const values = [id];
