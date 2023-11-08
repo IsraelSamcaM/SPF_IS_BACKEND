@@ -2,9 +2,9 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
-
+//hola gente
 var corsOptions = {
-  origin: "http://localhost:3000"
+  origin: "*"
 };
 
 app.use(cors(corsOptions));

@@ -2,10 +2,10 @@ const pool = require('../config/config');
 
 // Crear un nuevo usuario
 exports.create = (req, res) => {
-    const { nombre_usuario, correo_usuario, contrasenia_usuario, tipo_usuario, fecha_nacimiento } = req.body;
+    const { nombre_usuario, correo_usuario, contrasenia_usuario, tipo_usuario, fecha_nacimiento , path_photo, alias_usuario} = req.body;
 
-    const sql = 'INSERT INTO usuarios (nombre_usuario, correo_usuario, contrasenia_usuario, tipo_usuario, fecha_nacimiento) VALUES ($1, $2, $3, $4, $5)';
-    const values = [nombre_usuario, correo_usuario, contrasenia_usuario, tipo_usuario, fecha_nacimiento];
+    const sql = 'INSERT INTO usuarios (nombre_usuario, correo_usuario, contrasenia_usuario, tipo_usuario, fecha_nacimiento, path_photo, alias_usuario) VALUES ($1,$2,$3,$4,$5,$6,$7)';
+    const values = [nombre_usuario, correo_usuario, contrasenia_usuario, tipo_usuario, fecha_nacimiento, path_photo, alias_usuario];
 
     pool.query(sql, values, (err, result) => {
         if (err) {
@@ -57,10 +57,10 @@ exports.findOne = (req, res) => {
 // Actualizar un usuario por su ID
 exports.update = (req, res) => {
     const id = req.params.id;
-    const { nombre_usuario, correo_usuario, contrasenia_usuario, tipo_usuario, fecha_nacimiento } = req.body;
+    const { nombre_usuario, correo_usuario, contrasenia_usuario, tipo_usuario, fecha_nacimiento , path_photo, alias_usuario} = req.body;
 
-    const sql = 'UPDATE usuarios SET nombre_usuario = $1, correo_usuario = $2, contrasenia_usuario = $3, tipo_usuario = $4, fecha_nacimiento = $5 WHERE id_usuario = $6';
-    const values = [nombre_usuario, correo_usuario, contrasenia_usuario, tipo_usuario, fecha_nacimiento, id];
+    const sql = 'UPDATE usuarios SET nombre_usuario = $1, correo_usuario = $2, contrasenia_usuario = $3, tipo_usuario = $4, fecha_nacimiento = $5 , path_photo = $6, alias_usuario = $7 WHERE id_usuario = $8';
+    const values = [nombre_usuario, correo_usuario, contrasenia_usuario, tipo_usuario, fecha_nacimiento, path_photo, alias_usuario ,id];
 
     pool.query(sql, values, (err, result) => {
         if (err) {
@@ -162,7 +162,9 @@ exports.findCancionesByUser = (req, res) => {
         lc.titulo_lista,
         lc.path_image,
         u.id_usuario,
-        u.nombre_usuario
+        u.nombre_usuario,
+        u.path_photo,
+        u.alias_usuario
     FROM public.usuarios u
         JOIN public.lista_canciones lc ON u.id_usuario = lc.id_usuario
         JOIN public.canciones c ON lc.id_lista = c.id_lista
