@@ -79,9 +79,9 @@ exports.findAllByIdListByOyente = (req, res) => {
   c.duracion,
   c.genero,
   c.id_lista as original_lista_id,
-  cl.path_image as original_lista_image,
+  cl.path_image,
   u_real.id_usuario as original_usuario_id,
-  u_real.nombre_usuario as original_usuario_nombre
+  u_real.nombre_usuario
 FROM
   public.lista_canciones lc
 JOIN
