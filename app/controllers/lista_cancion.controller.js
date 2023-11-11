@@ -303,7 +303,7 @@ exports.findAllOyente = (req, res) => {
       lc.cantidad_canciones
     FROM lista_canciones lc
     JOIN usuarios u ON lc.id_usuario = u.id_usuario 
-    WHERE u.tipo_usuario = 'Oyente';`;
+    WHERE u.tipo_usuario = 'Oyente'`;
   pool.query(sql, (err, result) => {
       if (err) {
           console.error('Error al obtener las Listas de Canciones: ' + err.message);
@@ -331,7 +331,7 @@ exports.findAllOyente11 = (req, res) => {
     lc.cantidad_canciones
   FROM lista_canciones lc
   JOIN usuarios u ON lc.id_usuario = u.id_usuario 
-  WHERE u.tipo_usuario = 'Oyente';`;
+  WHERE u.tipo_usuario = 'Oyente'`;
 
   pool.query(sql, (err, result) => {
       if (err) {
@@ -347,7 +347,7 @@ exports.findAllOyente11 = (req, res) => {
 
 // Obtener una sola las Listas de Canciones por su ID del usuario Oyente
 exports.findListOyente = (req, res) => {
-  const id_usuario = req.params.id;
+  const id = req.params.id;
 // 'SELECT * FROM lista_canciones WHERE id_lista = $1';
   const sql =`
   SELECT 
@@ -361,8 +361,8 @@ exports.findListOyente = (req, res) => {
   lc.cantidad_canciones
     FROM lista_canciones lc
     JOIN usuarios u ON lc.id_usuario = u.id_usuario
-    Where u.tipo_usuario = 'Oyente' and u.id_usuario = $1`;
-  const values = [id_usuario];
+    Where u.tipo_usuario = 'Oyente' and u.id_usuario = $1 `;
+  const values = [id];
 
   pool.query(sql, values, (err, result) => {
     if (err) {

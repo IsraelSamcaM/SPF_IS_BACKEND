@@ -41,7 +41,7 @@ module.exports = app => {
     
     router.get("/oyente2", lista_canciones.findAllOyente11);
     
-    router.get("/oyente/:id_usuario", lista_canciones.findListOyente);
+    router.get("/oyente/:id", lista_canciones.findListOyente);
   
     app.use("/api/lista_canciones", router);
   };
