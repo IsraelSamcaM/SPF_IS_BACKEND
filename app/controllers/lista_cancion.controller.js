@@ -7,7 +7,7 @@ const pool = require('../config/config');
 exports.create = (req, res) => {
     const {  id_usuario, titulo_lista, path_image, colaborador } = req.body;
   
-    const sql = 'INSERT INTO lista_canciones ( id_usuario, titulo_lista, path_image, colaborador, cantidad_canciones) VALUES ($1,$2,$3,$4, 0)';
+    const sql = 'INSERT INTO lista_canciones ( id_usuario, titulo_lista, path_image, colaborador, cantidad_canciones) VALUES ($1,$2,$3,$4,0)';
     const values = [ id_usuario, titulo_lista, path_image, colaborador];
   
     pool.query(sql, values, (err, result) => {
@@ -74,6 +74,8 @@ exports.findAll = (req, res) => {
       lc.cantidad_canciones
     FROM lista_canciones lc
     JOIN usuarios u ON lc.id_usuario = u.id_usuario 
+    WHERE 
+      u.tipo_usuario <> 'Oyente';
     `;
     pool.query(sql, (err, result) => {
       if (err) {
@@ -282,3 +284,71 @@ exports.searchByTitle = (req, res) => {
     });
   };
 
+
+  //////----------------------///////
+  //////-----LISTAS OYENTE ---///////
+  //////----------------------///////
+
+// metodo para obtener todas las Listas de Canciones tipos de usuario Oyente de la bd y sus atributos
+exports.findAllOyente = (req, res) => {
+      //'SELECT * FROM lista_canciones lc JOIN usuarios u';
+    const sql =`
+    SELECT 
+      lc.id_lista,
+      u.id_usuario,
+      lc.titulo_lista,
+      lc.path_image,
+      lc.colaborador,
+      u.nombre_usuario,
+      u.tipo_usuario,
+      lc.cantidad_canciones
+    FROM lista_canciones lc
+    JOIN usuarios u ON lc.id_usuario = u.id_usuario 
+    WHERE 
+      u.tipo_usuario = 'Oyente';
+    `;
+    pool.query(sql, (err, result) => {
+      if (err) {
+        console.error('Error al obtener las Listas de Canciones: ' + err.message);
+        res.status(500).json({ message: 'Error al obtener las Listas de Canciones' });
+        return;
+      }
+      res.status(200).json(result.rows);
+    });
+};
+
+
+// Obtener una sola las Listas de Canciones por su ID del usuario Oyente
+exports.findListOyente = (req, res) => {
+  const id_usuario = req.params.id;
+// 'SELECT * FROM lista_canciones WHERE id_lista = $1';
+  const sql =`
+  SELECT 
+  lc.id_lista,
+  u.id_usuario,
+  lc.titulo_lista,
+  lc.path_image,
+  lc.colaborador,
+  u.nombre_usuario,
+  u.tipo_usuario,
+  lc.cantidad_canciones
+    FROM lista_canciones lc
+    JOIN usuarios u ON lc.id_usuario = u.id_usuario
+    Where u.tipo_usuario = 'Oyente' and u.id_usuario = $1
+  `;
+  const values = [id_usuario];
+
+  pool.query(sql, values, (err, result) => {
+    if (err) {
+      console.error('Error al obtener las Lista de Canciones: ' + err.message);
+      res.status(500).json({ message: 'Error al obtener las Lista de Canciones' });
+      return;
+    }
+
+    if (result.rowCount === 1) {
+      res.status(200).json(result.rows[0]);
+    } else {
+      res.status(404).json({ message: 'Listas de Canciones no encontrada con el ID ' + id });
+    }
+  });
+};

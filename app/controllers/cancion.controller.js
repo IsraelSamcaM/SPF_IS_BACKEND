@@ -66,6 +66,46 @@ const values = [id];
   });
 };
 
+///--------OYENTE ------///
+exports.findAllByIdListByOyente = (req, res) => {
+  //'SELECT c.id_cancion,c.id_lista,c.nombre_cancion,c.path_cancion,c.duracion, c.genero, lc.path_image FROM canciones c JOIN lista_canciones lc ON c.id_lista=lc.id_lista';
+  const id = req.params.id;
+  const sql = `
+  SELECT
+	c.id_cancion,
+	lc.id_lista,
+    c.nombre_cancion,
+    c.path_cancion,
+    c.duracion,
+    c.genero,
+    lc.path_image,
+    u.path_photo,
+    u.id_usuario,
+	  u.alias_usuario,
+    u.nombre_usuario
+    FROM
+        public.lista_canciones lc
+    JOIN
+        public.extra_playlist ep ON lc.id_lista = ep.id_lista
+    JOIN
+        public.canciones c ON ep.id_cancion = c.id_cancion
+    JOIN
+        public.usuarios u ON lc.id_usuario = u.id_usuario
+    WHERE ep.id_lista = $2;
+`;
+const values = [id];
+
+  pool.query(sql, values ,(err, result) => {
+    if (err) {
+      console.error('Error al obtener las Canciones: ' + err.message);
+      res.status(500).json({ message: 'Error al obtener las Canciones' });
+      return;
+    }
+    res.status(200).json(result.rows);
+  });
+};
+
+
 // Obtener una sola cancion por su ID
 exports.findOne = (req, res) => {
     const id = req.params.id;

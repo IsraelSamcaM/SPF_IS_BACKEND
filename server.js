@@ -33,6 +33,7 @@ require("./app/routes/turorial.routes")(app);
 require("./app/routes/lista_cancion.routes")(app);
 require("./app/routes/cancion.routes")(app);
 require("./app/routes/usuario.routes")(app);
+require("./app/routes/extra_playlist.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 4000;

@@ -33,6 +33,13 @@ module.exports = app => {
   
     // router para obtener una lista de canciones por su nombre
     router.get("/search/:searchTerm", lista_canciones.searchByTitle);
+
+    ////******SERVICIOS ROUTER PARA OYENTE********///////
+    
+    // router para encontrar todas las listas de canciones
+    router.get("/oyente/", lista_canciones.findAllOyente);
+    
+    router.get("/oyente/:id_usuario", lista_canciones.findListOyente);
   
     app.use("/api/lista_canciones", router);
   };
