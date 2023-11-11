@@ -318,6 +318,31 @@ exports.findAllOyente = (req, res) => {
   });
 };
 
+exports.findAllOyente2 = (req, res) => {
+  const sql = `
+  SELECT 
+    lc.id_lista,
+    u.id_usuario,
+    lc.titulo_lista,
+    lc.path_image,
+    lc.colaborador,
+    u.nombre_usuario,
+    u.tipo_usuario,
+    lc.cantidad_canciones
+  FROM lista_canciones lc
+  JOIN usuarios u ON lc.id_usuario = u.id_usuario 
+  WHERE u.tipo_usuario = 'Oyente'`;
+
+  pool.query(sql, (err, result) => {
+      if (err) {
+          console.error('Error al obtener los usuarios: ' + err.message);
+          res.status(500).json({ message: 'Error al obtener los usuarios' });
+          return;
+      }
+      res.status(200).json(result.rows);
+  });
+};
+
 exports.findAllOyente11 = (req, res) => {
   const sql = `
   SELECT 
