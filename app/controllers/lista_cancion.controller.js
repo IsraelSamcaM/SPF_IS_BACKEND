@@ -291,8 +291,7 @@ exports.searchByTitle = (req, res) => {
 
 // metodo para obtener todas las Listas de Canciones tipos de usuario Oyente de la bd y sus atributos
 exports.findAllOyente = (req, res) => {
-      //'SELECT * FROM lista_canciones lc JOIN usuarios u';
-    const sql =`
+  const sql = `
     SELECT 
       lc.id_lista,
       u.id_usuario,
@@ -304,18 +303,23 @@ exports.findAllOyente = (req, res) => {
       lc.cantidad_canciones
     FROM lista_canciones lc
     JOIN usuarios u ON lc.id_usuario = u.id_usuario 
-    WHERE 
-      u.tipo_usuario = 'Oyente';
-    `;
-    pool.query(sql, (err, result) => {
+    WHERE u.tipo_usuario = 'Oyente';
+  `;
+
+  pool.query(sql, (err, result) => {
       if (err) {
-        console.error('Error al obtener las Listas de Canciones: ' + err.message);
-        res.status(500).json({ message: 'Error al obtener las Listas de Canciones' });
-        return;
+          console.error('Error al obtener las Listas de Canciones: ' + err.message);
+          return res.status(500).json({ message: 'Error al obtener las Listas de Canciones' });
       }
-      res.status(200).json(result.rows);
-    });
+
+      if (result && result.rows) {
+          res.status(200).json(result.rows);
+      } else {
+          res.status(404).json({ message: 'No se encontraron listas de canciones para usuarios oyentes.' });
+      }
+  });
 };
+
 
 
 // Obtener una sola las Listas de Canciones por su ID del usuario Oyente
