@@ -303,8 +303,7 @@ exports.findAllOyente = (req, res) => {
       lc.cantidad_canciones
     FROM lista_canciones lc
     JOIN usuarios u ON lc.id_usuario = u.id_usuario 
-    WHERE u.tipo_usuario = 'Oyente';
-  `;
+    WHERE u.tipo_usuario = 'Oyente';`;
   pool.query(sql, (err, result) => {
       if (err) {
           console.error('Error al obtener las Listas de Canciones: ' + err.message);
@@ -332,8 +331,7 @@ exports.findAllOyente11 = (req, res) => {
     lc.cantidad_canciones
   FROM lista_canciones lc
   JOIN usuarios u ON lc.id_usuario = u.id_usuario 
-  WHERE u.tipo_usuario = 'Oyente';
-`;
+  WHERE u.tipo_usuario = 'Oyente';`;
 
   pool.query(sql, (err, result) => {
       if (err) {
@@ -363,8 +361,7 @@ exports.findListOyente = (req, res) => {
   lc.cantidad_canciones
     FROM lista_canciones lc
     JOIN usuarios u ON lc.id_usuario = u.id_usuario
-    Where u.tipo_usuario = 'Oyente' and u.id_usuario = $1
-  `;
+    Where u.tipo_usuario = 'Oyente' and u.id_usuario = $1`;
   const values = [id_usuario];
 
   pool.query(sql, values, (err, result) => {
