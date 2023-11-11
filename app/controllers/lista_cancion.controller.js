@@ -88,28 +88,28 @@ exports.findAll = (req, res) => {
 };
 
 exports.findAllListasConCanciones = (req, res) => {
-const sql =`
-SELECT 
-  lc.id_lista,
-  u.id_usuario,
-  lc.titulo_lista,
-  lc.path_image,
-  lc.colaborador,
-  u.nombre_usuario,
-  u.tipo_usuario,
-  lc.cantidad_canciones
-FROM lista_canciones lc
-JOIN usuarios u ON lc.id_usuario = u.id_usuario 
-WHERE cantidad_canciones != 0
-`;
-pool.query(sql, (err, result) => {
-  if (err) {
-    console.error('Error al obtener las Listas de Canciones: ' + err.message);
-    res.status(500).json({ message: 'Error al obtener las Listas de Canciones' });
-    return;
-  }
-  res.status(200).json(result.rows);
-});
+  const sql =`
+  SELECT 
+    lc.id_lista,
+    u.id_usuario,
+    lc.titulo_lista,
+    lc.path_image,
+    lc.colaborador,
+    u.nombre_usuario,
+    u.tipo_usuario,
+    lc.cantidad_canciones
+  FROM lista_canciones lc
+  JOIN usuarios u ON lc.id_usuario = u.id_usuario 
+  WHERE cantidad_canciones != 0
+  `;
+  pool.query(sql, (err, result) => {
+    if (err) {
+      console.error('Error al obtener las Listas de Canciones: ' + err.message);
+      res.status(500).json({ message: 'Error al obtener las Listas de Canciones' });
+      return;
+    }
+    res.status(200).json(result.rows);
+  });
 };
 
 // Obtener todas la lista de Canciones si le das su id con sus Canciones asociadas y su artista

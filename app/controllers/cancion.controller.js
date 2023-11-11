@@ -91,7 +91,7 @@ exports.findAllByIdListByOyente = (req, res) => {
         public.canciones c ON ep.id_cancion = c.id_cancion
     JOIN
         public.usuarios u ON lc.id_usuario = u.id_usuario
-    WHERE ep.id_lista = $2;
+    WHERE ep.id_lista = $1;
 `;
 const values = [id];
 
