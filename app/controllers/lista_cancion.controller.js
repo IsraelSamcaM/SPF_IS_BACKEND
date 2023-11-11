@@ -290,36 +290,9 @@ exports.searchByTitle = (req, res) => {
   //////----------------------///////
 
 // metodo para obtener todas las Listas de Canciones tipos de usuario Oyente de la bd y sus atributos
+
 exports.findAllOyente = (req, res) => {
   const sql = `
-    SELECT 
-      lc.id_lista,
-      u.id_usuario,
-      lc.titulo_lista,
-      lc.path_image,
-      lc.colaborador,
-      u.nombre_usuario,
-      u.tipo_usuario,
-      lc.cantidad_canciones
-    FROM lista_canciones lc
-    JOIN usuarios u ON lc.id_usuario = u.id_usuario 
-    WHERE u.tipo_usuario = 'Oyente'`;
-  pool.query(sql, (err, result) => {
-      if (err) {
-          console.error('Error al obtener las Listas de Canciones: ' + err.message);
-          return res.status(500).json({ message: 'Error al obtener las Listas de Canciones del oyente' });
-      }
-
-      if (result && result.rows) {
-          res.status(200).json(result.rows);
-      } else {
-          res.status(404).json({ message: 'No se encontraron listas de canciones para usuarios oyentes.' });
-      }
-  });
-};
-
-exports.findAllOyente2 = (req, res) => {
-  const sql = `
   SELECT 
     lc.id_lista,
     u.id_usuario,
@@ -335,33 +308,8 @@ exports.findAllOyente2 = (req, res) => {
 
   pool.query(sql, (err, result) => {
       if (err) {
-          console.error('Error al obtener los usuarios: ' + err.message);
-          res.status(500).json({ message: 'Error al obtener los usuarios' });
-          return;
-      }
-      res.status(200).json(result.rows);
-  });
-};
-
-exports.findAllOyente11 = (req, res) => {
-  const sql = `
-  SELECT 
-    lc.id_lista,
-    u.id_usuario,
-    lc.titulo_lista,
-    lc.path_image,
-    lc.colaborador,
-    u.nombre_usuario,
-    u.tipo_usuario,
-    lc.cantidad_canciones
-  FROM lista_canciones lc
-  JOIN usuarios u ON lc.id_usuario = u.id_usuario 
-  WHERE u.tipo_usuario = 'Oyente'`;
-
-  pool.query(sql, (err, result) => {
-      if (err) {
-          console.error('Error al obtener los usuarios: ' + err.message);
-          res.status(500).json({ message: 'Error al obtener los usuarios' });
+          console.error('Error al obtener las listas de cancion: ' + err.message);
+          res.status(500).json({ message: 'Error al obtener las listas de canciones' });
           return;
       }
       res.status(200).json(result.rows);
@@ -389,17 +337,12 @@ exports.findListOyente = (req, res) => {
     Where u.tipo_usuario = 'Oyente' and u.id_usuario = $1 `;
   const values = [id];
 
-  pool.query(sql, values, (err, result) => {
+  pool.query(sql, (err, result) => {
     if (err) {
-      console.error('Error al obtener las Lista de Canciones: ' + err.message);
-      res.status(500).json({ message: 'Error al obtener las Lista de Canciones' });
-      return;
+        console.error('Error al obtener las listas de cancion: ' + err.message);
+        res.status(500).json({ message: 'Error al obtener las listas de canciones' });
+        return;
     }
-
-    if (result.rowCount === 1) {
-      res.status(200).json(result.rows[0]);
-    } else {
-      res.status(404).json({ message: 'Listas de Canciones no encontrada con el ID ' + id });
-    }
+    res.status(200).json(result.rows);
   });
 };
