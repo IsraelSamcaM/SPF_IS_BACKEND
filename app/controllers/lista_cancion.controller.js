@@ -337,7 +337,7 @@ exports.findListOyente = (req, res) => {
     Where u.tipo_usuario = 'Oyente' and u.id_usuario = $1 `;
   const values = [id];
 
-  pool.query(sql, (err, result) => {
+  pool.query(sql, values,(err, result) => {
     if (err) {
         console.error('Error al obtener las listas de cancion: ' + err.message);
         res.status(500).json({ message: 'Error al obtener las listas de canciones' });
