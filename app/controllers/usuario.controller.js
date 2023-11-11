@@ -2,10 +2,10 @@ const pool = require('../config/config');
 
 // Crear un nuevo usuario
 exports.create = (req, res) => {
-    const { nombre_usuario, correo_usuario, contrasenia_usuario, tipo_usuario, fecha_nacimiento , path_photo, alias_usuario} = req.body;
+    const { nombre_usuario, correo_usuario, contrasenia_usuario, tipo_usuario, fecha_nacimiento , path_photo, alias_usuario, cantidad_listas} = req.body;
 
-    const sql = 'INSERT INTO usuarios (nombre_usuario, correo_usuario, contrasenia_usuario, tipo_usuario, fecha_nacimiento, path_photo, alias_usuario) VALUES ($1,$2,$3,$4,$5,$6,$7)';
-    const values = [nombre_usuario, correo_usuario, contrasenia_usuario, tipo_usuario, fecha_nacimiento, path_photo, alias_usuario];
+    const sql = 'INSERT INTO usuarios (nombre_usuario, correo_usuario, contrasenia_usuario, tipo_usuario, fecha_nacimiento, path_photo, alias_usuario,cantidad_listas) VALUES ($1,$2,$3,$4,$5,$6,$7,0)';
+    const values = [nombre_usuario, correo_usuario, contrasenia_usuario, tipo_usuario, fecha_nacimiento, path_photo, alias_usuario, cantidad_listas];
 
     pool.query(sql, values, (err, result) => {
         if (err) {
