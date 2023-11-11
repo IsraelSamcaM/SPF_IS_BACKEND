@@ -1,4 +1,5 @@
-module.exports = app => {
+module.exports = app => 
+{
     const lista_canciones = require("../controllers/lista_cancion.controller.js");
   
     var router = require("express").Router();
@@ -20,7 +21,7 @@ module.exports = app => {
     router.get("/getnuevo/", lista_canciones.findAllListasConCanciones);
   
     // router para encontrar todas las listas con sus canciones asociadas 
-    router.get("/getcompleto/", lista_canciones.findAllMusic);
+    router.get("/getcompleto/", lista_canciones.findAllOyente2);
 
     // router para obtener una sola lista de canciones por su id
     router.get("/:id", lista_canciones.findOne);
@@ -44,4 +45,5 @@ module.exports = app => {
     router.get("/oyente/:id", lista_canciones.findListOyente);
   
     app.use("/api/lista_canciones", router);
-  };
+
+};
