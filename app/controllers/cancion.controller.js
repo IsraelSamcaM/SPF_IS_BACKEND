@@ -72,26 +72,30 @@ exports.findAllByIdListByOyente = (req, res) => {
   const id = req.params.id;
   const sql = `
   SELECT
-	c.id_cancion,
-	lc.id_lista,
-    c.nombre_cancion,
-    c.path_cancion,
-    c.duracion,
-    c.genero,
-    lc.path_image,
-    u.path_photo,
-    u.id_usuario,
-	  u.alias_usuario,
-    u.nombre_usuario
-    FROM
-        public.lista_canciones lc
-    JOIN
-        public.extra_playlist ep ON lc.id_lista = ep.id_lista
-    JOIN
-        public.canciones c ON ep.id_cancion = c.id_cancion
-    JOIN
-        public.usuarios u ON lc.id_usuario = u.id_usuario
-    WHERE ep.id_lista = $1;
+  c.id_cancion,
+  lc.id_lista,
+  c.nombre_cancion,
+  c.path_cancion,
+  c.duracion,
+  c.genero,
+  c.id_lista as original_lista_id,
+  cl.path_image as original_lista_image,
+  u_real.id_usuario as original_usuario_id,
+  u_real.nombre_usuario as original_usuario_nombre
+FROM
+  public.lista_canciones lc
+JOIN
+  public.extra_playlist ep ON lc.id_lista = ep.id_lista
+JOIN
+  public.canciones c ON ep.id_cancion = c.id_cancion
+JOIN
+  public.usuarios u ON lc.id_usuario = u.id_usuario
+JOIN
+  public.lista_canciones cl ON c.id_lista = cl.id_lista -- Subconsulta para obtener la información de la lista original
+JOIN
+  public.usuarios u_real ON cl.id_usuario = u_real.id_usuario -- Subconsulta para obtener la información del usuario real
+WHERE
+  ep.id_lista = $1;
 `;
 const values = [id];
 
